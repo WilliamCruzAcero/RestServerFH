@@ -21,8 +21,10 @@ class Server {
 
     middleweres() {
         
-        this.app.use(cors());
-        this.app.use(express.static('public', {cacheControl: false}));
+        this.app.use( cors() );
+        //lectura y parseo del body
+        this.app.use( express.json() );
+        this.app.use( express.static('public', {cacheControl: false}) );
     }
 
     routes() {
