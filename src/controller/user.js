@@ -72,9 +72,9 @@ const userdelete = async(req, res = response) => {
     //borrar de forma fisica
     // const user = await User.findByIdAndDelete(id);
     const user = await User.findByIdAndUpdate(id, {status: false});
-
+   
     res.json({
-        user
+        user,
     })
 }
 
