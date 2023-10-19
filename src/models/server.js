@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 const routerUser = require('../routes/user');
-const routerLogin = require('../routes/login');
+const routerLogin = require('../routes/auth');
 
 const { dbConnection } = require('../../database/config');
 
@@ -14,7 +14,7 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.user = '/user';
-        this.login = '/login'
+        this.login = '/auth'
 
         //Conectar a base de datos
 
