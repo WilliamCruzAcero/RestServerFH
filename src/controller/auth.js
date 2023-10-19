@@ -11,9 +11,9 @@ const loginPost = async(req, res = response) => {
 
     try {
 
-        const user = await User.findOne({ email });
-        console.log({user})
         //verificar si el correo existe
+        const user = await User.findOne({ email });
+        
         if( !user ) {
            return res.status(400).json({
                 msg: 'El correo o la contraseña no es correcto -- email'
@@ -46,17 +46,16 @@ const loginPost = async(req, res = response) => {
         
     } catch (error) {
         console.log(error)
-        return res.status(500).json({
+        res.status(500).json({
             msg: 'Hable con el administrador'
         });
-        
     }
 }
 
 const googleSignIn = async( req, res = response ) => {
     
     const { id_token } = req.body;
-    // console.log(id_token)
+    
     try {
         const { name, lastname, email, image } = await googleVerify( id_token );
         

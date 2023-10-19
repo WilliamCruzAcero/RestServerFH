@@ -1,6 +1,6 @@
 const { OAuth2Client } = require('google-auth-library');
 
-const client = new OAuth2Client(process.env.GOOGLE_CLIENTE_ID);
+// const client = new OAuth2Client(process.env.GOOGLE_CLIENTE_ID);
 
 function parseJwt (token) {
     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
