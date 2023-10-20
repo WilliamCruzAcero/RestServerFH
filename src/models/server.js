@@ -5,6 +5,7 @@ const routerUser = require('../routes/user');
 const routerLogin = require('../routes/auth');
 
 const { dbConnection } = require('../../database/config');
+const routerCategories = require('../routes/categories');
 
 
 
@@ -14,7 +15,8 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.user = '/user';
-        this.login = '/auth'
+        this.login = '/auth';
+        this.categories = '/categories';
 
         //Conectar a base de datos
 
@@ -41,8 +43,9 @@ class Server {
     }
 
     routes() {
-       this.app.use(this.user, routerUser)
-       this.app.use(this.login, routerLogin)
+       this.app.use(this.user, routerUser);
+       this.app.use(this.login, routerLogin);
+       this.app.use(this.categories, routerCategories);
     }
 
     listen() {

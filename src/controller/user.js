@@ -1,7 +1,7 @@
 const {request, response} = require('express');
 const bcrypt = require('bcryptjs')
 
-const User = require('../models/user');
+const {User} = require('../models');
 
 const userGetAll = async(req, res = response ) => {
 
@@ -11,8 +11,8 @@ const userGetAll = async(req, res = response ) => {
     const [totalUsers, users] = await Promise.all([
         User.countDocuments(query),
         User.find(query)
-        .skip(desde)
-        .limit(limit)
+            .skip(desde)
+            .limit(limit)
     ])
 
     res.json({
@@ -21,15 +21,15 @@ const userGetAll = async(req, res = response ) => {
     })
 }
 
-// const userGetById = async(req, res = response ) => {
+const userGetById = async(req, res = response ) => {
 
-//     const { id } = req.params;
+    const { id } = req.params;
     
-//     const userById = User.findOne(id)
-//     const user = JSON.stringify(userById)
+    const userById = await User.findById(id)
+    
 
-//     res.json({ user })
-// }
+    res.json({ userById })
+}
 
 const userPost = async(req, res = response) => {
 
@@ -80,7 +80,7 @@ const userdelete = async(req, res = response) => {
 
 module.exports = {
     userGetAll,
-    // userGetById,
+    userGetById,
     userPost,
     userPut,
     userPatch,

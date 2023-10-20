@@ -4,7 +4,8 @@ const { check } = require('express-validator');
 const {
     validateFields,
     validateJWT,
-    validateRole
+    validateRole,
+    verifyRole
 } = require('../../middlewares');
 
 const { 
@@ -15,15 +16,21 @@ const {
 
 const { 
     userGetAll,
+    userGetById, 
     userPost,
     userPut,
     userdelete,
-    userPatch, 
+    userPatch
 } = require('../controller/user');
 
 const routerUser = Router();
 
     routerUser.get('/', userGetAll);
+    routerUser.get('/:id',[
+            check('id', 'No es un ID de MOngo valido').isMongoId(),
+            check('id').custom( existsUserById ),
+            validateFields
+        ],userGetById);
     routerUser.post('/', [
             check('name', 'El nombre es obligatorio').not().isEmpty(),
             check('lastname', 'El apellido es obligatorio').not().isEmpty(),
@@ -42,7 +49,7 @@ const routerUser = Router();
     routerUser.patch('/', userPatch);
     routerUser.delete('/:id',[
             validateJWT,
-            // verifyRole,
+            verifyRole,
             validateRole('ADMIN_ROLE', 'SALES_ROLE'),
             check('id', 'No es un ID valido').isMongoId(),
             check('id').custom( existsUserById ),
