@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "echo 'hola mundo'",
+    "build": "npm install",
     "start": "node app.js"
   },
   "keywords": [],
