@@ -45,9 +45,9 @@ const getProductById = async(req, res = response) => {
 const createProduct = async(req, res = response) => {
 
 
-    const {name, price, category, description} = req.body;
+    const {status, user, ...body} = req.body;
     
-    const productDB = await Product.findOne( {name} );
+    const productDB = await Product.findOne( { name: body.name } );
     
     // verificar se la producto existe
     if ( productDB ) {
@@ -59,10 +59,8 @@ const createProduct = async(req, res = response) => {
     //generar data a guardar
     const data = {
         
-        name: name.toUpperCase(),
-        price,
-        category,
-        description,
+        ...body,
+        name: body.name.toUpperCase(),
         user: req.user._id
     }
 

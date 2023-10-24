@@ -23,7 +23,11 @@ const {
     userPut,
     userPatch,
     userdelete
-} =require('./user')
+} =require('./user');
+
+const {
+    search
+} = require('./search')
 
 module.exports = {
     loginPost,
@@ -39,6 +43,7 @@ module.exports = {
     userPost,
     userPut,
     userPatch,
-    userdelete
+    userdelete,
+    search,
 
 }

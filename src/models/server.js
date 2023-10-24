@@ -7,14 +7,16 @@ const routerUser = require('../routes/user');
 const routerLogin = require('../routes/auth');
 const routerCategories = require('../routes/categories');
 const routerProduct = require('../routes/products');
+const routerSearch = require('../routes/search');
 
 class Server {
-    
+     
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
 
         this.user = '/user';
+        this.search = '/search';
         this.login = '/auth';
         this.categories = '/categories';
         this.products = '/product'
@@ -44,10 +46,11 @@ class Server {
     }
 
     routes() {
-       this.app.use(this.user, routerUser);
-       this.app.use(this.login, routerLogin);
-       this.app.use(this.categories, routerCategories);
-       this.app.use(this.products, routerProduct);
+        this.app.use(this.categories, routerCategories);
+        this.app.use(this.login, routerLogin);
+        this.app.use(this.products, routerProduct);
+        this.app.use(this.search, routerSearch);
+        this.app.use(this.user, routerUser);
     }
 
     listen() {

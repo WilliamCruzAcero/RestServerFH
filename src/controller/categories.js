@@ -6,7 +6,7 @@ const getCategories = async( req, res = response) => {
       
     const { limit = 2, desde = 0 } = req.query;
     const query = {status: true}
-
+    
     const [totalCategories, categories] = await Promise.all([
         Category.countDocuments(query),
         Category.find()
