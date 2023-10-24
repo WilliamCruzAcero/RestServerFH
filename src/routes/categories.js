@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { 
     validateFields,
     validateJWT, 
-    verifyRole
+    verifyAdminRole
 } = require('../../middlewares');
 
 const { 
@@ -13,7 +13,7 @@ const {
     createCategory,
     updateCategory,
     deleteCategory
-} = require('../controller/categories');
+} = require('../controller');
 
 const { existsCategoryById } = require('../../helpers/db-valiaters');
 
@@ -22,7 +22,7 @@ const routerCategories = Router();
     //obtener todas las categorias
     routerCategories.get('/', getCategories);
     //obtner una categoria por id 
-    routerCategories.get('/:id',[
+    routerCategories.get('/:id', [
             check('id', 'No es un ID de MOngo valido').isMongoId(),
             check('id').custom( existsCategoryById ),
             validateFields
@@ -34,7 +34,7 @@ const routerCategories = Router();
             validateFields
         ], createCategory);
     //actualizar - privado - cualquiera con toquen valido
-    routerCategories.put('/:id',[
+    routerCategories.put('/:id', [
             validateJWT,
             check('id', 'No es un ID valido').isMongoId(),
             check('id').custom( existsCategoryById ),
@@ -42,9 +42,9 @@ const routerCategories = Router();
             validateFields 
         ],updateCategory);
     //borrar una categoria - solo el ADMIN puede hacerlo
-    routerCategories.delete('/:id',[
+    routerCategories.delete('/:id', [
             validateJWT,
-            verifyRole,
+            verifyAdminRole,
             check('id', 'No es un ID valido').isMongoId(),
             check('id').custom( existsCategoryById ),
             validateFields       

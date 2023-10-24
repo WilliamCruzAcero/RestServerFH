@@ -1,22 +1,23 @@
 const express = require('express');
 const cors = require('cors');
 
+const { dbConnection } = require('../../database/config');
+
 const routerUser = require('../routes/user');
 const routerLogin = require('../routes/auth');
-
-const { dbConnection } = require('../../database/config');
 const routerCategories = require('../routes/categories');
-
-
+const routerProduct = require('../routes/products');
 
 class Server {
     
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
+
         this.user = '/user';
         this.login = '/auth';
         this.categories = '/categories';
+        this.products = '/product'
 
         //Conectar a base de datos
 
@@ -46,6 +47,7 @@ class Server {
        this.app.use(this.user, routerUser);
        this.app.use(this.login, routerLogin);
        this.app.use(this.categories, routerCategories);
+       this.app.use(this.products, routerProduct);
     }
 
     listen() {

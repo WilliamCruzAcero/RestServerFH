@@ -25,7 +25,15 @@ const getCategories = async( req, res = response) => {
 const getCategoryBvId = async( req, res = response) => {
       
     const { id } = req.params;
+
     const categoria = await Category.findById( id ).populate('user', 'name');
+   
+    // si tiene status: false
+    if ( !categoria.status ) {
+        return res.status(401).json({
+            msg: 'Categoria bloqueada, hable con el adminstrador'
+        });
+    }
 
     res.json({ categoria })
 }
@@ -54,7 +62,6 @@ const createCategory = async( req, res = response) => {
     await category.save() 
 
     res.status(201).json({
-        msg: 'peticion POST',
         category
     })
 }

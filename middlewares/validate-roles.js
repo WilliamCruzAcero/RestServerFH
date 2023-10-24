@@ -1,6 +1,6 @@
 const { request, response } = require('express');
 
-const verifyRole = (req = request, res = response, next) => {
+const verifyAdminRole = (req = request, res = response, next) => {
 
     if( !req.user ) {
         return res.status(500).json({
@@ -39,6 +39,6 @@ const validateRole = ( ...roles ) => {
 }
 
 module.exports = {
-    verifyRole,
+    verifyAdminRole,
     validateRole
 }

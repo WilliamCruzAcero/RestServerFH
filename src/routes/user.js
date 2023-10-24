@@ -5,7 +5,7 @@ const {
     validateFields,
     validateJWT,
     validateRole,
-    verifyRole
+    verifyAdminRole
 } = require('../../middlewares');
 
 const { 
@@ -49,7 +49,7 @@ const routerUser = Router();
     routerUser.patch('/', userPatch);
     routerUser.delete('/:id',[
             validateJWT,
-            verifyRole,
+            verifyAdminRole,
             validateRole('ADMIN_ROLE', 'SALES_ROLE'),
             check('id', 'No es un ID valido').isMongoId(),
             check('id').custom( existsUserById ),
