@@ -1,6 +1,6 @@
 const { response } = require("express");
 
-const { searchUsers, searchProducts, searchCategory } = require("../../helpers/search");
+const { searchUsers, searchProducts, searchCategory, searchRole } = require("../../helpers/search");
 
 // coleciones permitidas
 const collectionsAllowed = [
@@ -13,7 +13,8 @@ const collectionsAllowed = [
 // buscar en DB
 const search = (req, res = response) => {
 
-    const { collection, term } = req.params;
+    const { collection } = req.params;
+    const {name, email, uid }= req.query;
 
     if ( !collectionsAllowed.includes( collection ) ) {
         return res.status(400).json({
@@ -22,13 +23,16 @@ const search = (req, res = response) => {
     }
     switch (collection) {
         case 'users':
-            searchUsers( term, res );
+            searchUsers( name, email, uid, res );
             break;
         case 'products':
-            searchProducts( term, res);
+            searchProducts( name, uid, res);
             break;
         case 'categories':
-            searchCategory( term, res);
+            searchCategory( name, uid, res);
+            break;
+        case 'roles':
+            searchRole( name, uid, res);
             break;
     
         default:

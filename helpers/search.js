@@ -1,26 +1,28 @@
 const { response } = require("express");
 const { ObjectId } = require("mongoose").Types;
 
-const { User, Product, Category } = require("../src/models");
+const { User, Product, Category, Role } = require("../src/models");
 
-const searchUsers = async( term = '', res = response) => {
+const searchUsers = async( name = '', email = '', uid = '', res = response) => {
 
     // buscar con Id de mongo
-    const isMongoId = ObjectId.isValid( term );
+    const isMongoId = ObjectId.isValid( uid );
 
     if ( isMongoId ) {
-        const user = await User.findById( term );
+        const user = await User.findById( uid );
+        
         res.json({
             results: (user) ? [user] : []
         });
     }
 
     //expresion regular para que no diference mayusculas de minusculas
-    const regex = new RegExp( term, 'i' );
+    const regexName = new RegExp( name, 'i' );
+    const regexEmail = new RegExp( email, 'i' );
 
     // buscar con nombre 
     const users = await User.find({
-        $or: [{ name: regex }, { email: regex, }],
+        $or: [{ name: regexName }, { email: regexEmail, }],
         $and: [{ status: true }]
     });
     
@@ -29,38 +31,37 @@ const searchUsers = async( term = '', res = response) => {
     });
 }
 
-const searchProducts = async( term = '', res = response) => {
+const searchProducts = async( name = '', uid = '', res = response) => {
 
     // buscar con Id de mongo
-    const isMongoId = ObjectId.isValid( term );
+    const isMongoId = ObjectId.isValid( uid );
 
     if ( isMongoId ) {
-        const product = await Product.findById( term );
+        const product = await Product.findById( uid );
         res.json({
             results: (product) ? [product] : []
         });
     }
 
     //expresion regular para que no diference mayusculas de minusculas
-    const regex = new RegExp( term, 'i' );
+    const regexName = new RegExp( name, 'i' );
 
     // buscar con nombre 
-    const products = await Product.find({ name: regex, status: true })
+    const products = await Product.find({ name: regexName, status: true })
                             .populate('user', 'name')                        
                             .populate('category', 'name');
-    
     res.json({
         results: products
     });
 }
 
-const searchCategory = async( term = '', res = response) => {
+const searchCategory = async( name = '', uid = '', res = response) => {
    
     // buscar con Id de mongo
-    const isMongoId = ObjectId.isValid( term );
+    const isMongoId = ObjectId.isValid( uid );
 
     if ( isMongoId ) {
-        const category = await Category.findById( term );
+        const category = await Category.findById( uid );
         
         res.json({
             results: (category) ? [ category ] : []
@@ -68,19 +69,46 @@ const searchCategory = async( term = '', res = response) => {
     }
 
     //expresion regular para que no diference mayusculas de minusculas
-    const regex = new RegExp( term, 'i' );
+    const regexName = new RegExp( name, 'i' );
 
     // buscar con nombre 
-    const categories = await Category.find({ name: regex, status: true })
-                        .populate('user', 'name');
+    const categories = await Category.find({ name: regexName, status: true })
+                        .populate('user', 'name')
+                        
     
     res.json({
         results: categories
     });
 }
+    
+    const searchRole = async( name = '', uid = '', res = response) => {
+    
+        // buscar con Id de mongo
+        const isMongoId = ObjectId.isValid( uid );
+
+        if ( isMongoId ) {
+            const role = await Role.findById( uid );
+            
+            res.json({
+                results: (role) ? [ role ] : []
+            });
+        }
+
+        //expresion regular para que no diference mayusculas de minusculas
+        const regexName = new RegExp( name, 'i' );
+
+        // buscar con nombre 
+        const roles = await Role.find({ name: regexName, status: true })
+                            .populate('user', 'name');
+        
+        res.json({
+            results: roles
+        });
+}
 
 module.exports = {
     searchUsers,
     searchProducts,
-    searchCategory
+    searchCategory,
+    searchRole,
 }
