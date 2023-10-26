@@ -27,10 +27,6 @@ const UserSchema = Schema({
     },
     
     role: {
-
-        // type: Schema.Types.ObjectId,
-        // ref: 'Role',
-        // required: true
         type: String,
         required: [true, 'Seleccione un rol'],
         default: 'USER_ROLE',
