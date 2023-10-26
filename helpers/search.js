@@ -9,8 +9,9 @@ const searchUsers = async( name = '', email = '', uid = '', res = response) => {
     const isMongoId = ObjectId.isValid( uid );
 
     if ( isMongoId ) {
-        const user = await User.findById( uid );
         
+        const user = await User.findById( uid );
+                
         res.json({
             results: (user) ? [user] : []
         });
@@ -22,12 +23,17 @@ const searchUsers = async( name = '', email = '', uid = '', res = response) => {
 
     // buscar con nombre 
     const users = await User.find({
-        $or: [{ name: regexName }, { email: regexEmail, }],
+        $or: [{ name: regexName }, { email: regexEmail }],
         $and: [{ status: true }]
     });
     
+    const usersCount = await User.count({
+        $or: [{ name: regexName }, { email: regexEmail, }],
+        $and: [{ status: true }]
+    });
+        
     res.json({
-        results: users
+        results: {usersCount}, users
     });
 }
 
@@ -50,8 +56,12 @@ const searchProducts = async( name = '', uid = '', res = response) => {
     const products = await Product.find({ name: regexName, status: true })
                             .populate('user', 'name')                        
                             .populate('category', 'name');
+    
+    // contador de Productos encontrados
+    const productsCount = await Product.count({ name: regexName, status: true })
+                            
     res.json({
-        results: products
+        results: {productsCount}, products
     });
 }
 
@@ -74,14 +84,14 @@ const searchCategory = async( name = '', uid = '', res = response) => {
     // buscar con nombre 
     const categories = await Category.find({ name: regexName, status: true })
                         .populate('user', 'name')
-                        
+    const categoryCounter = await Category.count({ name: regexName, status: true });
     
     res.json({
-        results: categories
+        results: {categoryCounter}, categories
     });
 }
     
-    const searchRole = async( name = '', uid = '', res = response) => {
+    const searchRoles = async( name = '', uid = '', res = response) => {
     
         // buscar con Id de mongo
         const isMongoId = ObjectId.isValid( uid );
@@ -100,9 +110,10 @@ const searchCategory = async( name = '', uid = '', res = response) => {
         // buscar con nombre 
         const roles = await Role.find({ name: regexName, status: true })
                             .populate('user', 'name');
-        
+        const roleCounter = await Role.find({ name: regexName, status: true })
+                            
         res.json({
-            results: roles
+            results: {roleCounter}, roles
         });
 }
 
@@ -110,5 +121,5 @@ module.exports = {
     searchUsers,
     searchProducts,
     searchCategory,
-    searchRole,
+    searchRoles,
 }

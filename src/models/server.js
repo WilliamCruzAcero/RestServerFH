@@ -8,6 +8,7 @@ const routerLogin = require('../routes/auth');
 const routerCategories = require('../routes/categories');
 const routerProduct = require('../routes/products');
 const routerSearch = require('../routes/search');
+const routerRole = require('../routes/role');
 
 class Server {
      
@@ -19,6 +20,7 @@ class Server {
         this.search = '/search';
         this.login = '/auth';
         this.categories = '/categories';
+        this.roles = '/roles';
         this.products = '/product'
 
         //Conectar a base de datos
@@ -49,6 +51,7 @@ class Server {
         this.app.use(this.categories, routerCategories);
         this.app.use(this.login, routerLogin);
         this.app.use(this.products, routerProduct);
+        this.app.use(this.roles, routerRole);
         this.app.use(this.search, routerSearch);
         this.app.use(this.user, routerUser);
     }

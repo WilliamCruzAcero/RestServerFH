@@ -1,10 +1,13 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 
+const SP_R = process.env.SP_R;
+const AD_R = process.env.AD_R;
+
 const { 
     validateFields,
     validateJWT, 
-    verifyAdminRole
+    validateRole,
 } = require('../../middlewares');
 
 const { 
@@ -26,28 +29,30 @@ const routerCategories = Router();
             check('id', 'No es un ID de MOngo valido').isMongoId(),
             check('id').custom( existsCategoryById ),
             validateFields
-        ],getCategoryBvId);
+        ], getCategoryBvId);
     //crear categoria - privado - cuaquier persona con token valido
     routerCategories.post('/', [
             validateJWT,
+            validateRole(SP_R, AD_R),
             check('name', 'El nombre es obligatorio').not().isEmpty(),
             validateFields
         ], createCategory);
     //actualizar - privado - cualquiera con toquen valido
     routerCategories.put('/:id', [
             validateJWT,
+            validateRole(SP_R, AD_R),
             check('id', 'No es un ID valido').isMongoId(),
             check('id').custom( existsCategoryById ),
             check('name', 'El nombre es obligatorio').not().isEmpty(),
             validateFields 
-        ],updateCategory);
+        ], updateCategory);
     //borrar una categoria - solo el ADMIN puede hacerlo
     routerCategories.delete('/:id', [
             validateJWT,
-            verifyAdminRole,
+            validateRole(SP_R),
             check('id', 'No es un ID valido').isMongoId(),
             check('id').custom( existsCategoryById ),
             validateFields       
-        ],deleteCategory);
+        ], deleteCategory);
 
 module.exports = routerCategories

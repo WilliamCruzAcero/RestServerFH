@@ -1,11 +1,13 @@
 const {Router} = require('express');
 const { check } = require('express-validator');
 
+const SP_R = process.env.SP_R;
+const AD_R = process.env.AD_R;
+
 const {
     validateFields,
     validateJWT,
     validateRole,
-    verifyAdminRole
 } = require('../../middlewares');
 
 const { 
@@ -41,6 +43,7 @@ const routerUser = Router();
             validateFields
         ],userPost);
     routerUser.put('/:id', [
+            validateJWT,
             check('id', 'No es un ID valido').isMongoId(),
             check('id').custom( existsUserById ),
             check('role').custom( validRole ),
@@ -49,11 +52,10 @@ const routerUser = Router();
     routerUser.patch('/', userPatch);
     routerUser.delete('/:id',[
             validateJWT,
-            verifyAdminRole,
-            validateRole('ADMIN_ROLE', 'SALES_ROLE'),
+            validateRole( SP_R, AD_R ),
             check('id', 'No es un ID valido').isMongoId(),
             check('id').custom( existsUserById ),
             validateFields
         ], userdelete);
 
-module.exports = routerUser
+module.exports = routerUser 

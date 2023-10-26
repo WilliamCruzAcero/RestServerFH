@@ -9,7 +9,7 @@ const getProducts = async(req, res = response) => {
 
     const [ totalProducts, products ] = await Promise.all([
         Product.countDocuments(query),
-        Product.find()
+        Product.find(query)
                 .populate('user', 'name')
                 .populate('category', 'name')
                 .skip(desde)
@@ -34,7 +34,7 @@ const getProductById = async(req, res = response) => {
     
     if ( !product.status ) {
         return res.status(401).json({
-            msg: 'Producto bloqueado, hable con el admistrador'
+            msg: 'Producto bloqueado, hable con un administrador.'
         })
     }
 
@@ -100,7 +100,7 @@ const deleteProduct = async(req, res = response) => {
     const deleteProduct = await Product.findByIdAndUpdate( id, { status: false}, {new: true});
     
     res.json({ 
-        msg: 'produsto barrado',
+        msg: 'producto borrado con exito.',
         deleteProduct
     });
 }

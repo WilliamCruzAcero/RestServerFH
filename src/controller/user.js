@@ -1,11 +1,11 @@
 const {request, response} = require('express');
 const bcrypt = require('bcryptjs')
 
-const {User} = require('../models');
+const {User, Role} = require('../models');
 
 const userGetAll = async(req, res = response ) => {
 
-    const { limit = 2, desde = 0 } = req.query;
+    const { limit, desde = 0 } = req.query;
     const query = {status: true}
 
     const [totalUsers, users] = await Promise.all([
@@ -27,14 +27,16 @@ const userGetById = async(req, res = response ) => {
     
     const userById = await User.findById(id)
     
-
     res.json({ userById })
 }
 
 const userPost = async(req, res = response) => {
 
     const { name, lastname, email, password, role } = req.body;
+    
     const user = new User( {name, lastname, email, password, role} );
+
+    console.log(user)
 
     const salt = bcrypt.genSaltSync();
     user.password = bcrypt.hashSync(password, salt)

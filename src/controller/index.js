@@ -5,6 +5,14 @@ const {
 } = require('./auth');
 
 const {
+    getRoles,
+    getRoleById,
+    createRole,
+    updateRole,
+    deleteRole
+} = require('./role')
+
+const {
     getCategories,
     getCategoryBvId,
     createCategory,
@@ -45,5 +53,9 @@ module.exports = {
     userPatch,
     userdelete,
     search,
-
+    getRoles,
+    getRoleById,
+    createRole,
+    updateRole,
+    deleteRole
 }

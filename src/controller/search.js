@@ -1,6 +1,6 @@
 const { response } = require("express");
 
-const { searchUsers, searchProducts, searchCategory, searchRole } = require("../../helpers/search");
+const { searchUsers, searchProducts, searchCategory, searchRoles } = require("../../helpers/search");
 
 // coleciones permitidas
 const collectionsAllowed = [
@@ -32,7 +32,7 @@ const search = (req, res = response) => {
             searchCategory( name, uid, res);
             break;
         case 'roles':
-            searchRole( name, uid, res);
+            searchRoles( name, uid, res);
             break;
     
         default:

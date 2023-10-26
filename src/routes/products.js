@@ -1,11 +1,14 @@
 const { Router } = require('express');
-
 const { check } = require('express-validator');
+
+const SP_R = process.env.SP_R;
+const AD_R = process.env.AD_R;
+const US_R = process.env.US_R;
 
 const { 
     validateFields,
     validateJWT,
-    verifyAdminRole
+    validateRole,
 } = require('../../middlewares');
 
 const {
@@ -31,7 +34,7 @@ const routerProduct = Router();
     // crear producto - private - autorizados (ADMIN_ROLE)
     routerProduct.post('/', [
         validateJWT,
-        verifyAdminRole,
+        validateRole( SP_R, AD_R, US_R),
         check('name', 'El nombre es obligatorio').not().isEmpty(),
         check('category', 'No es un id de Mongo').isMongoId(),
         check('category').custom( existsCategoryById ),
@@ -40,7 +43,7 @@ const routerProduct = Router();
     // actualizar producto - solo ADMIN
     routerProduct.put('/:id', [
         validateJWT,
-        verifyAdminRole,
+        validateRole( SP_R, AD_R, US_R),
         check('id', 'No es un ID de MOngo valido').isMongoId(),
         check('id').custom( existsProductoById ),
         validateFields
@@ -48,7 +51,7 @@ const routerProduct = Router();
     // borrar producto - solo Admin
     routerProduct.delete('/:id', [
         validateJWT,
-        verifyAdminRole,
+        validateRole( SP_R, AD_R),
         check('id', 'No es un ID de MOngo valido').isMongoId(),
         check('id').custom( existsProductoById ),
         validateFields

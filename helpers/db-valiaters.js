@@ -5,12 +5,26 @@ const {
     Product
 } = require('../src/models');
 
-const validRole = async( role = '' ) => {
-
-    const existsRole = await Role.findOne({role});
-
+const validRole = async( name = '') => {
+   
+    const existsRole = await Role.findOne({name});
+    
     if( !existsRole ) {
-        throw new Error(`El rol ${role} no está registrado en la base de datos`);
+
+        throw new Error(`El rol ${name} no está registrado en la base de datos`);
+    }
+    if ( !existsRole.status ) {
+        throw new Error('Role no valido - role con status: false')
+    } 
+}
+
+const existsRoleById = async( id ) => {
+
+    const roleExists = await Role.findById(id);
+    
+    if ( !roleExists ) {
+        throw new Error(`El ID : ${id}, no existe`)
+        
     }
 }
 
@@ -57,6 +71,7 @@ const existsProductoById = async( id ) => {
 module.exports = {
     validRole,
     existsMail,
+    existsRoleById,
     existsUserById,
     existsCategoryById,
     existsProductoById,
