@@ -22,7 +22,6 @@ const {
     userPost,
     userPut,
     userdelete,
-    userPatch
 } = require('../controller/user');
 
 const routerUser = Router();
@@ -49,7 +48,6 @@ const routerUser = Router();
             check('role').custom( validRole ),
             validateFields
         ],userPut);
-    routerUser.patch('/', userPatch);
     routerUser.delete('/:id',[
             validateJWT,
             validateRole( SP_R, AD_R ),

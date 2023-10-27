@@ -17,7 +17,7 @@ const {
     createProduct,
     updateProduct,
     deleteProduct,
-} = require('../controller/product');
+} = require('../controller');
 
 const { existsProductoById, existsCategoryById } = require('../../helpers/db-valiaters');
 

@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 const { dbConnection } = require('../../database/config');
-
 
 const {
     routerCategories,
@@ -37,7 +37,6 @@ class Server {
 
         //rutas de aplicacion
         this.routes();
-        
     }
 
     async conectarDB() {
@@ -45,11 +44,17 @@ class Server {
     }
 
     middlewares() {
-        
+        // cors
         this.app.use( cors() );
         //lectura y parseo del body
         this.app.use( express.json() );
-        this.app.use( express.static('public', {cacheControl: false}) );
+        // Directorio publico
+        this.app.use( express.static( 'public', {cacheControl: false} ) );
+        // File upload - carga de archivo
+        this.app.use( fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/'
+        }));
     }
 
     routes() {
@@ -67,7 +72,6 @@ class Server {
             console.log(`Escuchando en el puerto: ${this.port}`)
         })
     }
-
 }
 
 module.exports = Server;

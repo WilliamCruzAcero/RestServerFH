@@ -1,9 +1,9 @@
 const { Router } = require('express'); 
-const { getUpload } = require('../controller/upload');
+const { fileUpload } = require('../controller');
  
 
 const routerUpload = Router();
 
-    routerUpload.get('/', getUpload);
-
+    routerUpload.post('/', fileUpload );
+        
 module.exports = routerUpload;
