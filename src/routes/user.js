@@ -58,4 +58,4 @@ const routerUser = Router();
             validateFields
         ], userdelete);
 
-module.exports = routerUser 
+module.exports = routerUser;

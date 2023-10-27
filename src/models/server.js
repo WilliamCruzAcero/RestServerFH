@@ -3,12 +3,16 @@ const cors = require('cors');
 
 const { dbConnection } = require('../../database/config');
 
-const routerUser = require('../routes/user');
-const routerLogin = require('../routes/auth');
-const routerCategories = require('../routes/categories');
-const routerProduct = require('../routes/products');
-const routerSearch = require('../routes/search');
-const routerRole = require('../routes/role');
+
+const {
+    routerCategories,
+    routerLogin,
+    routerProduct,
+    routerRole,
+    routerSearch,
+    routerUpload,
+    routerUser,
+} = require('../routes');
 
 class Server {
      
@@ -16,12 +20,13 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
 
-        this.user = '/user';
-        this.search = '/search';
-        this.login = '/auth';
         this.categories = '/categories';
-        this.roles = '/roles';
-        this.products = '/product'
+        this.login = '/login';
+        this.products = '/product';
+        this.role = '/role';
+        this.search = '/search';
+        this.upload = '/upload';
+        this.user = '/user';
 
         //Conectar a base de datos
 
@@ -48,12 +53,13 @@ class Server {
     }
 
     routes() {
-        this.app.use(this.categories, routerCategories);
-        this.app.use(this.login, routerLogin);
-        this.app.use(this.products, routerProduct);
-        this.app.use(this.roles, routerRole);
-        this.app.use(this.search, routerSearch);
-        this.app.use(this.user, routerUser);
+        this.app.use( this.categories, routerCategories );
+        this.app.use( this.login, routerLogin );
+        this.app.use( this.products, routerProduct );
+        this.app.use( this.role, routerRole );
+        this.app.use( this.search, routerSearch );
+        this.app.use( this.upload, routerUpload );
+        this.app.use( this.user, routerUser );
     }
 
     listen() {

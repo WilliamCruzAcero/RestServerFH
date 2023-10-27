@@ -6,7 +6,7 @@ const { validateFields } = require('../../middlewares');
 
 const routerLogin = Router();
 
-    routerLogin.post('/login',[
+    routerLogin.post('/',[
         check('email', 'El correo es obligatorio').isEmail(),
         check('password', 'La contraseña es obligatoria').not().isEmpty(),
         validateFields
@@ -17,5 +17,5 @@ const routerLogin = Router();
         validateFields
     ], googleSignIn)
 
-module.exports = routerLogin
+module.exports = routerLogin;
 

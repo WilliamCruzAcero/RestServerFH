@@ -55,4 +55,4 @@ const routerCategories = Router();
             validateFields       
         ], deleteCategory);
 
-module.exports = routerCategories
+module.exports = routerCategories;

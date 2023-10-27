@@ -57,4 +57,4 @@ const routerProduct = Router();
         validateFields
     ], deleteProduct);
 
-module.exports = routerProduct
+module.exports = routerProduct;

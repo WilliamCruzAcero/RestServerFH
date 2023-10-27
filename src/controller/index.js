@@ -2,7 +2,7 @@
 const {
     loginPost,
     googleSignIn
-} = require('./auth');
+} = require('./login');
 
 const {
     getRoles,

@@ -23,11 +23,11 @@ const getRoles = async( req, res = response ) => {
 //Obtener un role por ID 
 const getRoleById = async( req, res = response ) => {
 
-    const { id } = req.params;
-
-    const role = await Role.findOne( id )
-                .populate('user', 'name');
-
+    const  {id}  = req.params;
+    
+    const role = await Role.findById( id )
+                 .populate('user', 'name');
+    
     if ( !role.status ) {
         return res.status(401).json({
             msg: 'Role bloqueado, hable con un administrador.'

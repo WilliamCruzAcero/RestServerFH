@@ -26,7 +26,8 @@ const getCategoryBvId = async( req, res = response) => {
       
     const { id } = req.params;
 
-    const categoria = await Category.findById( id ).populate('user', 'name');
+    const categoria = await Category.findById( id )
+                      .populate('user', 'name');
    
     // si tiene status: false
     if ( !categoria.status ) {
