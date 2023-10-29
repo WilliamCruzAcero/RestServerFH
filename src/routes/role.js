@@ -17,7 +17,7 @@ const {
     validateRole,
 } = require('../../middlewares');
 
-const { existsRoleById } = require('../../helpers/db-valiaters');
+const { existsRoleById } = require('../../helpers');
 
 const routerRole = Router();
 

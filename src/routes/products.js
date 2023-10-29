@@ -19,7 +19,10 @@ const {
     deleteProduct,
 } = require('../controller');
 
-const { existsProductoById, existsCategoryById } = require('../../helpers/db-valiaters');
+const {
+    existsProductoById,
+    existsCategoryById
+} = require('../../helpers');
 
 const routerProduct = Router();
 

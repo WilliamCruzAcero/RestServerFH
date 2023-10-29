@@ -18,7 +18,7 @@ const {
     deleteCategory
 } = require('../controller');
 
-const { existsCategoryById } = require('../../helpers/db-valiaters');
+const { existsCategoryById } = require('../../helpers');
 
 const routerCategories = Router();
 

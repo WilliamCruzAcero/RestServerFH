@@ -14,7 +14,7 @@ const {
     validRole,
     existsMail,
     existsUserById
-} = require('../../helpers/db-valiaters');
+} = require('../../helpers');
 
 const { 
     userGetAll,
@@ -22,7 +22,7 @@ const {
     userPost,
     userPut,
     userdelete,
-} = require('../controller/user');
+} = require('../controller');
 
 const routerUser = Router();
 

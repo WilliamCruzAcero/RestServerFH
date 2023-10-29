@@ -25,7 +25,7 @@ class Server {
         this.products = '/product';
         this.role = '/role';
         this.search = '/search';
-        this.upload = '/upload';
+        this.upload = '/uploads';
         this.user = '/user';
 
         //Conectar a base de datos
@@ -53,7 +53,8 @@ class Server {
         // File upload - carga de archivo
         this.app.use( fileUpload({
             useTempFiles : true,
-            tempFileDir : '/tmp/'
+            tempFileDir : '/tmp/',
+            createParentPath : true
         }));
     }
 

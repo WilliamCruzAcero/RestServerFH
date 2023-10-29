@@ -44,7 +44,6 @@ const getProductById = async(req, res = response) => {
 // Crear productp
 const createProduct = async(req, res = response) => {
 
-
     const {status, user, ...body} = req.body;
     
     const productDB = await Product.findOne( { name: body.name } );
