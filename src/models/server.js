@@ -22,11 +22,11 @@ class Server {
 
         this.categories = '/categories';
         this.login = '/login';
-        this.products = '/product';
-        this.role = '/role';
+        this.products = '/products';
+        this.roles = '/roles';
         this.search = '/search';
-        this.upload = '/uploads';
-        this.user = '/user';
+        this.uploads = '/uploads';
+        this.users = '/users';
 
         //Conectar a base de datos
 
@@ -62,10 +62,10 @@ class Server {
         this.app.use( this.categories, routerCategories );
         this.app.use( this.login, routerLogin );
         this.app.use( this.products, routerProduct );
-        this.app.use( this.role, routerRole );
+        this.app.use( this.roles, routerRole );
         this.app.use( this.search, routerSearch );
-        this.app.use( this.upload, routerUpload );
-        this.app.use( this.user, routerUser );
+        this.app.use( this.uploads, routerUpload );
+        this.app.use( this.users, routerUser );
     }
 
     listen() {
