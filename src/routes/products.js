@@ -43,7 +43,7 @@ const routerProduct = Router();
         check('category').custom( existsCategoryById ),
         validateFields
     ], createProduct);
-    // actualizar producto - solo ADMIN
+    // actualizar producto - solo usuarios autorizados
     routerProduct.put('/:id', [
         validateJWT,
         validateRole( SP_R, AD_R, US_R),
@@ -51,7 +51,7 @@ const routerProduct = Router();
         check('id').custom( existsProductoById ),
         validateFields
     ], updateProduct);
-    // borrar producto - solo Admin
+    // borrar producto - super/Admin
     routerProduct.delete('/:id', [
         validateJWT,
         validateRole( SP_R, AD_R),

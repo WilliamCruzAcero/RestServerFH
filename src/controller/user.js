@@ -8,7 +8,7 @@ const userGetAll = async(req, res = response ) => {
     const { limit, desde = 0 } = req.query;
     const query = {status: true}
 
-    const [totalUsers, users] = await Promise.all([
+    const [ totalUsers, users ] = await Promise.all([
         User.countDocuments(query),
         User.find(query)
             .skip(desde)
@@ -33,16 +33,18 @@ const userGetById = async(req, res = response ) => {
 const userPost = async(req, res = response) => {
 
     const { name, lastname, email, password, role } = req.body;
-    
     const user = new User( {name, lastname, email, password, role} );
 
+    // Encriptar la contraseña
     const salt = bcrypt.genSaltSync();
     user.password = bcrypt.hashSync(password, salt)
+
+    // Guardar en BD
     await user.save();
 
     res.json({
         user
-    })
+    });
 }
 
 const userPut = async(req = request, res = response) => {
@@ -51,6 +53,7 @@ const userPut = async(req = request, res = response) => {
     const { _id, password, google, email, ...resto } = req.body;
 
     if ( password ) {
+        // Encriptar la contraseña
         const salt = bcrypt.genSaltSync();
         resto.password = bcrypt.hashSync(password, salt)
     }
@@ -61,15 +64,15 @@ const userPut = async(req = request, res = response) => {
 }
 
 const userdelete = async(req, res = response) => {
-    const {id} = req.params;
-
+    
     //borrar de forma fisica
     // const user = await User.findByIdAndDelete(id);
+    const { id } = req.params;
     const user = await User.findByIdAndUpdate(id, {status: false});
    
     res.json({
         user,
-    })
+    });
 }
 
 module.exports = {

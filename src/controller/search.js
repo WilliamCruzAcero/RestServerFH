@@ -1,6 +1,11 @@
 const { response } = require("express");
 
-const { searchUsers, searchProducts, searchCategory, searchRoles } = require("../../helpers/search");
+const {
+    searchUsers,
+    searchProducts,
+    searchCategory,
+    searchRoles
+} = require("../../helpers/search");
 
 // coleciones permitidas
 const collectionsAllowed = [
@@ -39,7 +44,6 @@ const search = (req, res = response) => {
             res.status(500).json({
                 msg: 'Busqueda no implementada.'
             })
-            break;
     }
 }
 

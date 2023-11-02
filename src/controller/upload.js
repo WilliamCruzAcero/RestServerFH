@@ -17,7 +17,6 @@ const fileUpload = async(req, res = response) => {
         res.status(200).json({ name });
 
     } catch (msg) {
-        
         res.status(400).json({ msg });
     }
 }
@@ -115,7 +114,6 @@ const updateImgage = async( req, res = response ) => {
     
     res.json({ model });
 }
-
 
 const showImage = async( req, res = response ) => {
     

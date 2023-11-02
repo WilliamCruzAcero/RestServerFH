@@ -3,12 +3,15 @@ const { check } = require('express-validator');
 
 const {
     fileUpload,
-    // updateImgage,
     showImage,
     updateImgageCloudinary,
 } = require('../controller');
 
-const { validateFields, validateFileUpload } = require('../../middlewares');
+const {
+    validateFields,
+    validateFileUpload
+} = require('../../middlewares');
+
 const { allowedCollection } = require('../../helpers');
 
 const routerUpload = Router();
@@ -25,6 +28,5 @@ const routerUpload = Router();
         check('collection').custom( c => allowedCollection( c, ['users', 'products']) ),
         validateFields
     ], updateImgageCloudinary );
-    // ], updateImgage);
-        
+    
 module.exports = routerUpload;

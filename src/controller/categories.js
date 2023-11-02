@@ -7,36 +7,36 @@ const getCategories = async( req, res = response) => {
     const { limit = 2, desde = 0 } = req.query;
     const query = {status: true}
     
-    const [totalCategories, categories] = await Promise.all([
+    const [ totalCategories, categories ] = await Promise.all([
         Category.countDocuments(query),
         Category.find()
                 .populate('user', 'name')
                 .skip(desde)
                 .limit(limit)
+    ]);
 
-    ])
     res.json({
         totalCategories,
         categories
     })
 }
 
-// obtener una cateregoria - populate
+// obtener una cateregoria por id - populate
 const getCategoryBvId = async( req, res = response) => {
       
     const { id } = req.params;
 
-    const categoria = await Category.findById( id )
+    const category = await Category.findById( id )
                       .populate('user', 'name');
    
     // si tiene status: false
-    if ( !categoria.status ) {
+    if ( !category.status ) {
         return res.status(401).json({
             msg: 'Categoria bloqueada, hable con el adminstrador'
         });
     }
 
-    res.json({ categoria })
+    res.json({ category })
 }
 
 // Crear categoria
@@ -59,6 +59,7 @@ const createCategory = async( req, res = response) => {
         user: req.user._id
     }
 
+    // guardar en DB
     const category = new Category(data);
     await category.save() 
 

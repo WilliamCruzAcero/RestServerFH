@@ -30,7 +30,6 @@ const loginPost = async(req, res = response) => {
         //verificar contraseña
         const validPassword = bcrypt.compareSync( password, user.password);
         if( !validPassword ) {
-            
             return res.status(400).json({
                  msg: 'El correo o la contraseña no es correcto -- password'
             })

@@ -1,7 +1,7 @@
 const { Schema, model} = require('mongoose');
 
 const ProductSchema = Schema({
-
+    
     name: {
         type: String,
         required: [true, 'El nombre es obligatorio'],
@@ -43,9 +43,7 @@ const ProductSchema = Schema({
     image: {
         type: String
     }
-
-})
-
+});
 
 ProductSchema.methods.toJSON = function() {
     const { __v, status, ...data } = this.toObject();
